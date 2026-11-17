@@ -268,7 +268,9 @@ final class MetronomeEngine: ObservableObject {
 
     private func configureAudio() throws {
         let session = AVAudioSession.sharedInstance()
-        try session.setCategory(.playback, mode: .default)   // keeps playing when the phone locks
+        // .playback keeps playing when the phone locks; .mixWithOthers lets you play along
+        // with music from another app instead of stopping it.
+        try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
         try session.setActive(true)
 
         guard sourceNode == nil else { return }
